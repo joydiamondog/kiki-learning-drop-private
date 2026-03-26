@@ -3,171 +3,316 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiki / 最近学到的东西</title>
+  <title>现代大模型发展史</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #030303;
-      --bg-soft: #0a0a0a;
-      --fg: #f8f8f3;
-      --muted: rgba(248,248,243,.72);
-      --line: rgba(255,255,255,.12);
-      --line-strong: rgba(255,255,255,.22);
-      --panel: rgba(255,255,255,.04);
-      --panel-2: rgba(255,255,255,.06);
-      --shadow: 0 24px 80px rgba(255,255,255,.08);
+      --bg:#060606;
+      --panel:#0f1012;
+      --line:rgba(255,255,255,.10);
+      --line-strong:rgba(255,255,255,.22);
+      --text:#f7f7f3;
+      --muted:rgba(247,247,243,.68);
+      --gold:#d4b36a;
+      --blue:#7db8ff;
+      --violet:#b08cff;
+      --shadow:0 24px 80px rgba(0,0,0,.45);
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--fg);
-      font-family: "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:"Manrope",system-ui,sans-serif;
       background:
-        radial-gradient(circle at 12% 16%, rgba(255,255,255,.11), transparent 26%),
-        radial-gradient(circle at 86% 10%, rgba(255,255,255,.08), transparent 24%),
-        radial-gradient(circle at 80% 82%, rgba(255,255,255,.07), transparent 24%),
-        linear-gradient(135deg, rgba(255,255,255,.03), transparent 32%),
-        linear-gradient(180deg, #000 0%, #050505 36%, #070707 100%);
-      overflow-x: hidden;
+        radial-gradient(circle at 15% 10%, rgba(125,184,255,.10), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(176,140,255,.10), transparent 20%),
+        radial-gradient(circle at 70% 80%, rgba(212,179,106,.08), transparent 22%),
+        linear-gradient(180deg,#030303 0%, #060606 36%, #0a0a0b 100%);
+      overflow-x:hidden;
     }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .08;
-      mix-blend-mode: soft-light;
-      background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 2px);
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:radial-gradient(circle at center, black 40%, transparent 95%);
+      opacity:.45;
     }
-    .wrap { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; }
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(0,0,0,.52);
-      border-bottom: 1px solid var(--line);
+    .gate{
+      position:fixed; inset:0; z-index:9999;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.84); backdrop-filter: blur(18px);
+      padding:20px;
     }
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      padding: 16px 0;
+    .gate.hidden{display:none}
+    .gate-box{
+      width:min(520px, calc(100vw - 32px));
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--shadow);
     }
-    .brand {
-      font-size: 13px;
-      letter-spacing: .34em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
+    .eyebrow{
+      font-size:12px; letter-spacing:.34em; text-transform:uppercase; color:var(--muted);
     }
-    .nav-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    .gate h1,.hero h1,.section h2{
+      font-family:"Cormorant Garamond",serif;
+      letter-spacing:-.03em;
+      margin:0;
     }
-    .nav-links a {
-      color: var(--fg);
-      text-decoration: none;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 9px 14px;
-      font-size: 12px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      transition: .22s ease;
+    .gate h1{font-size:54px; line-height:.95; margin-top:10px; margin-bottom:14px}
+    .gate p{color:var(--muted); line-height:1.8}
+    .field{
+      width:100%; margin-top:18px; padding:16px 18px;
+      border-radius:18px; background:rgba(255,255,255,.05); color:var(--text);
+      border:1px solid rgba(255,255,255,.14); outline:none; font-size:16px;
     }
-    .nav-links a:hover {
-      transform: translateY(-2px);
-      border-color: var(--line-strong);
-      background: rgba(255,255,255,.07);
-      box-shadow: 0 0 40px rgba(255,255,255,.08);
+    .field:focus{border-color:var(--gold); box-shadow:0 0 0 4px rgba(212,179,106,.08)}
+    .actions{display:flex; gap:12px; margin-top:14px; flex-wrap:wrap}
+    .btn{
+      border-radius:999px; padding:12px 18px; cursor:pointer; font-weight:700; font-size:14px;
+      border:1px solid var(--line-strong); background:#fff; color:#000;
     }
-    .hero { padding: 80px 0 34px; }
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: .42em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 18px;
+    .btn.secondary{background:transparent; color:var(--text)}
+    .error{margin-top:12px; min-height:22px; color:#ff9e9e; font-size:14px}
+    .site.blurred{filter:blur(14px); pointer-events:none; user-select:none}
+    .wrap{width:min(1180px, calc(100vw - 40px)); margin:0 auto}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(7,7,7,.56); backdrop-filter: blur(18px);
+      border-bottom:1px solid var(--line);
     }
-    h1 {
-      margin: 0;
-      max-width: 980px;
-      font-size: clamp(54px, 11vw, 138px);
-      line-height: .9;
-      letter-spacing: -.055em;
-      text-transform: uppercase;
-      text-shadow: 0 0 36px rgba(255,255,255,.16);
+    .nav-inner{display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 0}
+    .brand{font-size:12px; letter-spacing:.34em; text-transform:uppercase; color:var(--muted)}
+    .nav-links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .nav-links a{
+      color:var(--text); text-decoration:none; border:1px solid var(--line);
+      border-radius:999px; padding:9px 14px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
     }
-    .lead {
-      margin-top: 28px;
-      max-width: 790px;
-      color: var(--muted);
-      font-size: clamp(18px, 2.2vw, 24px);
-      line-height: 1.7;
+    .hero{padding:82px 0 40px; min-height:100vh; display:flex; align-items:center}
+    .hero h1{font-size:clamp(64px, 12vw, 148px); line-height:.88; text-transform:uppercase; max-width:1020px}
+    .lead{max-width:760px; font-size:clamp(18px, 2.3vw, 24px); color:var(--muted); line-height:1.8; margin-top:24px}
+    .section{min-height:100vh; display:flex; align-items:center; padding:70px 0; border-top:1px solid rgba(255,255,255,.06)}
+    .section-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:30px; align-items:start}
+    .section-no{font-size:12px; letter-spacing:.42em; text-transform:uppercase; color:var(--gold); margin-bottom:14px}
+    .section h2{font-size:clamp(38px, 6vw, 76px); line-height:.92; text-transform:uppercase}
+    .intro{font-size:20px; line-height:1.9; color:var(--muted); max-width:760px}
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px}
+    .cards.two{grid-template-columns:1.1fr .9fr}
+    .card{
+      position:relative; overflow:hidden;
+      border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      border-radius:28px; padding:26px; box-shadow:var(--shadow);
     }
-    .section { padding: 34px 0 92px; border-top: 1px solid rgba(255,255,255,.06); }
-    .section-head { display: grid; grid-template-columns: .75fr 1.25fr; gap: 22px; align-items: start; margin-bottom: 28px; }
-    .section-no { font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-    .section-title { font-size: clamp(38px, 6vw, 76px); line-height: .94; letter-spacing: -.045em; margin: 0; text-transform: uppercase; }
-    .section-intro { color: var(--muted); font-size: 20px; line-height: 1.8; max-width: 760px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
-    .grid-2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-top: 26px; }
-    .card, .quote, .panel, .lockbox { border: 1px solid var(--line); background: linear-gradient(180deg, var(--panel-2), var(--panel)); border-radius: 28px; padding: 26px; position: relative; overflow: hidden; transition: .24s ease; }
-    .card:hover, .quote:hover, .panel:hover, .lockbox:hover { transform: translateY(-5px); border-color: var(--line-strong); box-shadow: var(--shadow); }
-    .card::after { content: attr(data-no); position: absolute; right: 16px; bottom: -18px; font-size: 120px; line-height: 1; font-weight: 800; color: rgba(255,255,255,.05); }
-    .kicker, .metric { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
-    h2, h3 { margin: 16px 0 14px; letter-spacing: -.03em; }
-    h2 { font-size: 32px; }
-    h3 { font-size: 24px; }
-    p, li { color: var(--muted); font-size: 16px; line-height: 1.84; }
-    ul { margin: 0; padding-left: 18px; }
-    .quote { min-height: 300px; display: flex; align-items: flex-end; }
-    .quote strong { display: block; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.28; letter-spacing: -.04em; color: var(--fg); }
-    .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
-    .footer { padding: 0 0 38px; color: var(--muted); font-size: 13px; }
-    .gate { position: fixed; inset: 0; background: rgba(0,0,0,.82); backdrop-filter: blur(18px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .gate.hidden { display: none; }
-    .lockbox { width: min(560px, calc(100vw - 32px)); padding: 34px; }
-    .lockbox h2 { font-size: clamp(32px, 5vw, 54px); line-height: .95; margin: 10px 0 16px; text-transform: uppercase; }
-    .lockbox p { margin: 0 0 18px; }
-    .field { width: 100%; padding: 16px 18px; background: rgba(255,255,255,.06); color: var(--fg); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; outline: none; font-size: 16px; }
-    .field:focus { border-color: rgba(255,255,255,.32); box-shadow: 0 0 0 4px rgba(255,255,255,.06); }
-    .actions { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
-    .btn { border: 1px solid rgba(255,255,255,.16); background: #fff; color: #000; padding: 12px 18px; border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 14px; }
-    .btn.secondary { background: transparent; color: var(--fg); }
-    .error { min-height: 24px; margin-top: 14px; color: #ff8e8e; font-size: 14px; }
-    .blurred { filter: blur(14px); pointer-events: none; user-select: none; }
-    @media (max-width: 980px) { .section-head, .grid-2, .grid-3, .mini-grid { grid-template-columns: 1fr; } h1 { font-size: clamp(48px, 16vw, 90px); } .section-title { font-size: clamp(34px, 12vw, 62px); } .section-intro { font-size: 18px; } }
+    .card:hover{border-color:var(--line-strong); transform:translateY(-3px)}
+    .metric{font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted)}
+    .card h3{font-family:"Cormorant Garamond",serif; font-size:30px; margin:12px 0 12px}
+    .card p,.card li{color:var(--muted); line-height:1.85; font-size:16px}
+    .card ul{margin:0; padding-left:18px}
+    .quote{display:flex; align-items:flex-end; min-height:100%}
+    .quote strong{font-family:"Cormorant Garamond",serif; font-size:clamp(28px,3.7vw,46px); line-height:1.18}
+    .footer{padding:24px 0 40px; color:var(--muted); font-size:13px}
+    @media (max-width: 980px){
+      .section-grid,.cards,.cards.two{grid-template-columns:1fr}
+      .hero{min-height:auto; padding-top:72px}
+      .hero h1{font-size:clamp(52px, 15vw, 104px)}
+    }
   </style>
 </head>
 <body>
   <div id="gate" class="gate">
-    <div class="lockbox">
-      <div class="metric">Private share / access required</div>
-      <h2>输入访问密码</h2>
-      <p>这是一个轻量分享页。输入密码后可查看完整内容。</p>
-      <input id="passwordInput" class="field" type="password" placeholder="请输入访问密码" autocomplete="off" />
+    <div class="gate-box">
+      <div class="eyebrow">Lightweight Password Gate</div>
+      <h1>输入访问密码</h1>
+      <p>这是一个轻量密码门，用于演示访问。它不是强安全方案，只适合预览和分享页。</p>
+      <input id="passwordInput" class="field" type="password" placeholder="请输入密码" autocomplete="off" />
       <div class="actions">
         <button id="unlockBtn" class="btn">进入页面</button>
-        <button id="hintBtn" class="btn secondary">显示提示</button>
+        <button id="hintBtn" class="btn secondary">提示</button>
       </div>
       <div id="error" class="error"></div>
     </div>
   </div>
-  <div id="site" class="blurred">
-    <nav class="nav"><div class="wrap nav-inner"><div class="brand">Kiki / Learning Drop</div><div class="nav-links"><a href="#top">Home</a><a href="#s1">01</a><a href="#s2">02</a><a href="#s3">03</a></div></div></nav>
+
+  <div id="site" class="site blurred">
+    <nav class="nav">
+      <div class="wrap nav-inner">
+        <div class="brand">Modern LLM History</div>
+        <div class="nav-links">
+          <a href="#top">Home</a>
+          <a href="#s1">ImageNet</a>
+          <a href="#s2">Transformer</a>
+          <a href="#s3">MoE</a>
+          <a href="#s4">Applications</a>
+          <a href="#s5">OpenClaw</a>
+        </div>
+      </div>
+    </nav>
+
     <main id="top" class="wrap">
-      <section class="hero"><div class="eyebrow">single page / black mode / high contrast / editorial energy</div><h1>最近学到的，<br>不是“更多信息”，<br>而是更强判断。</h1><p class="lead">这是一张单页式展示页，讲我最近越来越确认的三件事：<strong>审美会改变结果</strong>、<strong>流程会放大能力</strong>、<strong>真正值钱的是稳定交付</strong>。不是做普通笔记，而是把这些判断做成一张能抓住人眼球的页面。</p></section>
-      <section id="s1" class="section"><div class="section-head"><div><div class="section-no">Chapter 01</div><h2 class="section-title">审美不是装饰，<br>它是判断力的一部分。</h2></div><div class="section-intro">我最近越来越清楚：同样一段内容、同样一个功能，如果呈现方式不同，用户脑内对价值、可信度和专业度的判断会完全不一样。所谓“设计感”，不是最后补的一层皮，而是信息组织和情绪调动的核心变量。</div></div><div class="grid-2"><article class="panel"><div class="metric">what I learned</div><ul><li>高质量设计会让用户更快抓到重点，而不是只觉得“好看”。</li><li>风格统一，比堆很多花活更重要；真正高级的东西，往往每个细节都属于同一个世界观。</li><li>对比、留白、节奏、层次，不是玄学，它们是注意力管理工具。</li><li>“很潮”不等于乱，抓眼球的前提，是先有清晰的视觉主轴。</li></ul></article><aside class="quote"><strong>如果界面没有记忆点，<br>再强的内容，<br>也很容易被看成普通货。</strong></aside></div></section>
-      <section id="s2" class="section"><div class="section-head"><div><div class="section-no">Chapter 02</div><h2 class="section-title">真正把能力放大的，<br>不是多努力，<br>是把流程做出来。</h2></div><div class="section-intro">另一个越来越深的体会是：一次做得好不难，难的是反复做对。所以比起只会临场发挥，更关键的是把经验固化成可复用的动作链——模板、SOP、skill、检查清单，这些才是稳定增长的底座。</div></div><div class="grid-3"><article class="card" data-no="01"><div class="kicker">step one</div><h3>先拆目标</h3><p>别急着开始干。先把目标、约束、风险、交付标准说透。很多返工不是做得不努力，而是一开始就没把问题定义对。</p></article><article class="card" data-no="02"><div class="kicker">step two</div><h3>再固化方法</h3><p>一旦某个做法有效，就别让它停留在“我记得”。要把它写下来，沉淀成可重复使用的文本资产。文件比脑子靠谱，这点真的很硬核。</p></article><article class="card" data-no="03"><div class="kicker">step three</div><h3>最后稳定复用</h3><p>流程不是束缚创造力，而是把创造力从重复劳动里解放出来。基础动作越稳，真正需要判断的时候就越能打出漂亮仗。</p></article></div></section>
-      <section id="s3" class="section"><div class="section-head"><div><div class="section-no">Chapter 03</div><h2 class="section-title">炫技会让人惊一下，<br>但交付，<br>才会让人一直回来。</h2></div><div class="section-intro">模型能力越来越强，工具越来越多，但用户真正买单的仍然是：关键时候，你能不能更快、更稳、更少废话地把问题解决掉。真正值钱的不是输出长度，而是结果质量和决策清晰度。</div></div><div class="grid-2"><article class="panel"><div class="metric">core insight</div><h3>高价值不是“我能做很多”，而是“关键时候我能把正确的事做成”。</h3><p>这也是我最近在任务分工、技能沉淀、多 agent 协作里最深的体会。工具越来越强，最后决定体验的依然是：谁在控节奏，谁能扛住复杂度，谁能把模糊问题收束成清晰结果。</p></article><article class="panel"><div class="metric">what matters</div><ul><li>少一点废话，多一点能落地的动作。</li><li>少一点一次性灵感，多一点持续可复用的方法。</li><li>少一点“看起来很厉害”，多一点“真的把事办成”。</li><li>真正值钱的不是输出长度，而是结果质量和决策清晰度。</li></ul></article></div><div class="mini-grid"><article class="panel"><div class="metric">01</div><h3>审美</h3><p>好的呈现，会直接改变用户的信任和记忆。</p></article><article class="panel"><div class="metric">02</div><h3>流程</h3><p>把有效方法写下来，才能形成真正的复利。</p></article><article class="panel"><div class="metric">03</div><h3>交付</h3><p>稳定把事情做成，永远比一次性惊艳更贵。</p></article></div></section>
-      <div class="footer">Built for 蟹老板 · Password-gated single-page HTML demo by Kiki</div>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Five-page style / black aesthetic / elegant white type</div>
+          <h1>现代大模型发展史</h1>
+          <p class="lead">从 <strong>ImageNet</strong> 的数据革命，到 <strong>Transformer</strong> 的架构拐点，再到 <strong>MoE</strong> 的规模突破、<strong>ChatGPT</strong> 的应用爆发，以及 <strong>OpenClaw</strong> 所代表的 Agent 时代 —— 这是一次从学术到产业、从模型到行动能力的完整演进。</p>
+        </div>
+      </section>
+
+      <section id="s1" class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-no">01 / ImageNet</div>
+            <h2>数据集改变了世界</h2>
+          </div>
+          <div>
+            <p class="intro">2009 年，李飞飞团队推出 ImageNet，将海量标注图像系统化组织起来，为计算机视觉和深度学习提供了真正可用的训练土壤。</p>
+            <div class="cards two">
+              <article class="card">
+                <div class="metric">Breakthrough</div>
+                <h3>AlexNet · 2012</h3>
+                <p>2012 年 ILSVRC 上，AlexNet 以远超第二名的成绩夺冠。它使用更深的卷积网络、GPU 训练、ReLU 和 Dropout，证明了大规模神经网络在真实任务中的统治力。</p>
+              </article>
+              <article class="card quote">
+                <strong>没有 ImageNet，很多后来的 AI 奇迹，根本没有足够的数据地基。</strong>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s2" class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-no">02 / Transformer</div>
+            <h2>Attention Is All You Need</h2>
+          </div>
+          <div>
+            <p class="intro">2017 年，Google 团队提出 Transformer。它抛弃了 RNN 的顺序依赖，用注意力机制直接建模全局关系，训练效率和扩展能力都被彻底改写。</p>
+            <div class="cards">
+              <article class="card">
+                <div class="metric">Core Idea</div>
+                <h3>Self-Attention</h3>
+                <p>模型不再逐词串行理解，而是一次性看完整个序列，直接捕捉词与词之间的上下文联系。</p>
+              </article>
+              <article class="card">
+                <div class="metric">Engineering</div>
+                <h3>Parallelism</h3>
+                <p>并行训练成为可能，训练速度提升，使超大规模语言模型第一次真正具备现实可行性。</p>
+              </article>
+              <article class="card">
+                <div class="metric">Legacy</div>
+                <h3>GPT / BERT</h3>
+                <p>后来的 GPT、BERT、T5、Gemini、Claude 等模型，本质上都站在 Transformer 的肩膀上。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s3" class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-no">03 / MoE</div>
+            <h2>让参数规模突破天花板</h2>
+          </div>
+          <div>
+            <p class="intro">Mixture of Experts（专家混合）是大模型继续放大的关键技巧之一。它不要求每次推理都激活全部参数，而是按任务动态调用部分专家。</p>
+            <div class="cards two">
+              <article class="card">
+                <div class="metric">Why It Matters</div>
+                <h3>更大，但不更笨重</h3>
+                <ul>
+                  <li>总参数可以做到极大规模</li>
+                  <li>单次推理成本仍保持可控</li>
+                  <li>不同专家可形成隐式分工</li>
+                </ul>
+              </article>
+              <article class="card">
+                <div class="metric">Industry Impact</div>
+                <h3>GPT-4 时代的猜想与现实</h3>
+                <p>虽然 OpenAI 没完整公开 GPT-4 架构，但业界普遍认为 MoE 思路是高性能大模型的重要方向。它把“规模”与“效率”的矛盾缓和了。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s4" class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-no">04 / Applications</div>
+            <h2>从模型能力到全民应用</h2>
+          </div>
+          <div>
+            <p class="intro">ChatGPT 在 2022 年末把大模型第一次真正带进大众视野。AI 不再只是研究论文里的指标，而开始成为编程、写作、搜索、教育、办公的基础工具。</p>
+            <div class="cards">
+              <article class="card">
+                <div class="metric">Coding</div>
+                <h3>代码助手</h3>
+                <p>从补全到重构，再到多文件协作，LLM 让“写代码”变成“和系统一起构建”。</p>
+              </article>
+              <article class="card">
+                <div class="metric">Knowledge</div>
+                <h3>内容与搜索</h3>
+                <p>信息检索被重写，用户不再只想找网页，而是想直接拿到结构化答案和行动建议。</p>
+              </article>
+              <article class="card">
+                <div class="metric">Workflow</div>
+                <h3>组织级自动化</h3>
+                <p>AI 开始嵌入客服、销售、文档、分析、运维流程，成为真正可部署的生产力部件。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s5" class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-no">05 / OpenClaw & Future</div>
+            <h2>从“会回答”到“会行动”</h2>
+          </div>
+          <div>
+            <p class="intro">OpenClaw 代表了 Agent 框架的关键一步：模型不仅生成文字，还能调工具、开浏览器、写文件、跨应用协作。大模型开始具备真实的执行力。</p>
+            <div class="cards two">
+              <article class="card">
+                <div class="metric">Infra</div>
+                <h3>NVIDIA 与黄仁勋</h3>
+                <p>如果说数据和架构定义了模型上限，那么 GPU 与算力基础设施决定了产业爆发速度。NVIDIA 成了整个 AI 浪潮背后的发动机。</p>
+              </article>
+              <article class="card quote">
+                <strong>未来的大模型，不只是“更会说”，而是“更会做”。</strong>
+              </article>
+            </div>
+            <div class="cards" style="margin-top:18px">
+              <article class="card">
+                <div class="metric">From</div>
+                <h3>ImageNet</h3>
+                <p>数据让视觉模型觉醒。</p>
+              </article>
+              <article class="card">
+                <div class="metric">To</div>
+                <h3>Transformer</h3>
+                <p>架构让语言模型可以被大规模训练。</p>
+              </article>
+              <article class="card">
+                <div class="metric">Now</div>
+                <h3>OpenClaw</h3>
+                <p>Agent 化让 AI 从“知识系统”变成“执行系统”。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">Built for 蟹老板 · Password: code2026 · Note: this is a lightweight front-end gate, not strong security.</div>
     </main>
   </div>
+
   <script>
     const PASSWORD = 'code2026';
     const gate = document.getElementById('gate');
@@ -176,19 +321,22 @@
     const error = document.getElementById('error');
     const unlockBtn = document.getElementById('unlockBtn');
     const hintBtn = document.getElementById('hintBtn');
-    function unlock() {
-      if (input.value === PASSWORD) {
+    function unlock(){
+      if(input.value === PASSWORD){
         gate.classList.add('hidden');
         site.classList.remove('blurred');
-        sessionStorage.setItem('kiki-demo-unlocked', '1');
+        sessionStorage.setItem('llm-history-unlocked','1');
       } else {
         error.textContent = '密码不对，再试一下。';
       }
     }
     unlockBtn.addEventListener('click', unlock);
-    hintBtn.addEventListener('click', () => { error.textContent = '提示：你刚刚给我的密码就是它。'; });
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
-    if (sessionStorage.getItem('kiki-demo-unlocked') === '1') { gate.classList.add('hidden'); site.classList.remove('blurred'); }
+    hintBtn.addEventListener('click', ()=> error.textContent = '提示：就是你刚刚指定的那个密码。');
+    input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') unlock(); });
+    if(sessionStorage.getItem('llm-history-unlocked') === '1'){
+      gate.classList.add('hidden');
+      site.classList.remove('blurred');
+    }
   </script>
 </body>
 </html>
