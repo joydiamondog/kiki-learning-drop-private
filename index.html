@@ -115,6 +115,14 @@
     .card ul{margin:0; padding-left:18px}
     .quote{display:flex; align-items:flex-end; min-height:100%}
     .quote strong{font-family:"Cormorant Garamond",serif; font-size:clamp(28px,3.7vw,46px); line-height:1.18}
+    .person-card{display:flex; align-items:center; gap:16px; margin-top:20px; padding:20px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+    .person-avatar{width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); box-shadow:0 4px 20px rgba(212,179,106,.3)}
+    .person-info{flex:1}
+    .person-name{font-family:"Cormorant Garamond",serif; font-size:24px; margin:0 0 4px}
+    .person-role{font-size:13px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase}
+    .history-img{width:100%; height:200px; object-fit:cover; border-radius:16px; margin:16px 0; border:1px solid var(--line); opacity:.9}
+    .img-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:16px}
+    .img-grid img{width:100%; height:140px; object-fit:cover; border-radius:12px; border:1px solid var(--line); opacity:.85}
     .footer{padding:24px 0 40px; color:var(--muted); font-size:13px}
     @media (max-width: 980px){
       .section-grid,.cards,.cards.two{grid-template-columns:1fr}
@@ -158,7 +166,7 @@
         <div>
           <div class="eyebrow">Five-page style / black aesthetic / elegant white type</div>
           <h1>现代大模型发展史</h1>
-          <p class="lead">从 <strong>ImageNet</strong> 的数据革命，到 <strong>Transformer</strong> 的架构拐点，再到 <strong>MoE</strong> 的规模突破、<strong>ChatGPT</strong> 的应用爆发，以及 <strong>OpenClaw</strong> 所代表的 Agent 时代 —— 这是一次从学术到产业、从模型到行动能力的完整演进。</p>
+          <p class="lead">从 <strong>ImageNet</strong> 的数据革命，到 <strong>Transformer</strong> 的架构拐点，再到 <strong>MoE</strong> 的规模突破、<strong>ChatGPT</strong> 的应用爆发，以及 <strong>OpenClaw</strong> 所代表的 Agent 时代 -- 这是一次从学术到产业、从模型到行动能力的完整演进。</p>
         </div>
       </section>
 
@@ -175,10 +183,18 @@
                 <div class="metric">Breakthrough</div>
                 <h3>AlexNet · 2012</h3>
                 <p>2012 年 ILSVRC 上，AlexNet 以远超第二名的成绩夺冠。它使用更深的卷积网络、GPU 训练、ReLU 和 Dropout，证明了大规模神经网络在真实任务中的统治力。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/AlexNet.png/640px-AlexNet.png" alt="AlexNet Architecture" />
               </article>
               <article class="card quote">
                 <strong>没有 ImageNet，很多后来的 AI 奇迹，根本没有足够的数据地基。</strong>
               </article>
+            </div>
+            <div class="person-card">
+              <img class="person-avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Fei-Fei_Li_at_AI_for_Good_2017.jpg/440px-Fei-Fei_Li_at_AI_for_Good_2017.jpg" alt="李飞飞" />
+              <div class="person-info">
+                <h4 class="person-name">李飞飞 Fei-Fei Li</h4>
+                <p class="person-role">ImageNet 创始人 · 斯坦福教授</p>
+              </div>
             </div>
           </div>
         </div>
@@ -197,17 +213,30 @@
                 <div class="metric">Core Idea</div>
                 <h3>Self-Attention</h3>
                 <p>模型不再逐词串行理解，而是一次性看完整个序列，直接捕捉词与词之间的上下文联系。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Transformer_%28machine_learning_model%29.png/640px-Transformer_%28machine_learning_model%29.png" alt="Transformer Architecture" />
               </article>
               <article class="card">
                 <div class="metric">Engineering</div>
                 <h3>Parallelism</h3>
                 <p>并行训练成为可能，训练速度提升，使超大规模语言模型第一次真正具备现实可行性。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Attention_is_all_you_need_-_Transformer_architecture.png/640px-Attention_is_all_you_need_-_Transformer_architecture.png" alt="Attention Mechanism" />
               </article>
               <article class="card">
                 <div class="metric">Legacy</div>
                 <h3>GPT / BERT</h3>
                 <p>后来的 GPT、BERT、T5、Gemini、Claude 等模型，本质上都站在 Transformer 的肩膀上。</p>
+                <div class="img-grid">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/120px-ChatGPT_logo.svg.png" alt="GPT" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/BERT_logo.png/120px-BERT_logo.png" alt="BERT" />
+                </div>
               </article>
+            </div>
+            <div class="person-card">
+              <img class="person-avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Ashish_Vaswani.jpg/440px-Ashish_Vaswani.jpg" alt="Ashish Vaswani" />
+              <div class="person-info">
+                <h4 class="person-name">Ashish Vaswani</h4>
+                <p class="person-role">Transformer 第一作者 · Essential AI CEO</p>
+              </div>
             </div>
           </div>
         </div>
@@ -234,7 +263,7 @@
               <article class="card">
                 <div class="metric">Industry Impact</div>
                 <h3>GPT-4 时代的猜想与现实</h3>
-                <p>虽然 OpenAI 没完整公开 GPT-4 架构，但业界普遍认为 MoE 思路是高性能大模型的重要方向。它把“规模”与“效率”的矛盾缓和了。</p>
+                <p>虽然 OpenAI 没完整公开 GPT-4 架构，但业界普遍认为 MoE 思路是高性能大模型的重要方向。它把"规模"与"效率"的矛盾缓和了。</p>
               </article>
             </div>
           </div>
@@ -253,17 +282,20 @@
               <article class="card">
                 <div class="metric">Coding</div>
                 <h3>代码助手</h3>
-                <p>从补全到重构，再到多文件协作，LLM 让“写代码”变成“和系统一起构建”。</p>
+                <p>从补全到重构，再到多文件协作，LLM 让"写代码"变成"和系统一起构建"。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/640px-ChatGPT_logo.svg.png" alt="ChatGPT" />
               </article>
               <article class="card">
                 <div class="metric">Knowledge</div>
                 <h3>内容与搜索</h3>
                 <p>信息检索被重写，用户不再只想找网页，而是想直接拿到结构化答案和行动建议。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png" alt="Google Search" />
               </article>
               <article class="card">
                 <div class="metric">Workflow</div>
                 <h3>组织级自动化</h3>
                 <p>AI 开始嵌入客服、销售、文档、分析、运维流程，成为真正可部署的生产力部件。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_logo.svg/640px-OpenAI_logo.svg.png" alt="OpenAI" />
               </article>
             </div>
           </div>
@@ -274,7 +306,7 @@
         <div class="section-grid">
           <div>
             <div class="section-no">05 / OpenClaw & Future</div>
-            <h2>从“会回答”到“会行动”</h2>
+            <h2>从"会回答"到"会行动"</h2>
           </div>
           <div>
             <p class="intro">OpenClaw 代表了 Agent 框架的关键一步：模型不仅生成文字，还能调工具、开浏览器、写文件、跨应用协作。大模型开始具备真实的执行力。</p>
@@ -283,10 +315,18 @@
                 <div class="metric">Infra</div>
                 <h3>NVIDIA 与黄仁勋</h3>
                 <p>如果说数据和架构定义了模型上限，那么 GPU 与算力基础设施决定了产业爆发速度。NVIDIA 成了整个 AI 浪潮背后的发动机。</p>
+                <img class="history-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Jensen_Huang_%28cropped%29.jpg/440px-Jensen_Huang_%28cropped%29.jpg" alt="Jensen Huang" />
               </article>
               <article class="card quote">
-                <strong>未来的大模型，不只是“更会说”，而是“更会做”。</strong>
+                <strong>未来的大模型，不只是"更会说"，而是"更会做"。</strong>
               </article>
+            </div>
+            <div class="person-card">
+              <img class="person-avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Jensen_Huang_%28cropped%29.jpg/440px-Jensen_Huang_%28cropped%29.jpg" alt="黄仁勋" />
+              <div class="person-info">
+                <h4 class="person-name">Jensen Huang 黄仁勋</h4>
+                <p class="person-role">NVIDIA CEO · AI 时代芯片教父</p>
+              </div>
             </div>
             <div class="cards" style="margin-top:18px">
               <article class="card">
@@ -302,7 +342,7 @@
               <article class="card">
                 <div class="metric">Now</div>
                 <h3>OpenClaw</h3>
-                <p>Agent 化让 AI 从“知识系统”变成“执行系统”。</p>
+                <p>Agent 化让 AI 从"知识系统"变成"执行系统"。</p>
               </article>
             </div>
           </div>
